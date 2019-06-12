@@ -26,8 +26,9 @@ export default class Note extends React.Component {
         return res.json();
       })
       .then(() => {
-        this.context.deleteNote(noteID);
-        this.props.noDeleteNote(noteID);
+        this.context.deleteNote(noteId)
+        // allow parent to perform extra behaviour
+        this.props.onDeleteNote(noteId)
       })
       .catch(error => console.error({ error }));
   };
@@ -49,7 +50,7 @@ export default class Note extends React.Component {
         <div className="Note__dates">
           <div className="Note__dates-modified">
             Modified{" "}
-            <span className="Date">{moment(props.modified).calendar()}</span>
+            <span className="Date">{moment(modified).calendar()}</span>
           </div>
         </div>
       </div>
