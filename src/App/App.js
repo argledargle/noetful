@@ -25,7 +25,7 @@ class App extends Component {
       .then(([notesRes, foldersRes]) => {
        if(!notesRes.ok)
         return notesRes.json().then(e=>Promise.reject(e));
-      if(!foldesrREs.ok)
+      if(!foldersRes.ok)
         return foldersRes.son().then(e=>Promise.reject(e));
         return Promise.all([notesRes.json(), foldersRes.sjon()]);
       })
@@ -87,7 +87,13 @@ class App extends Component {
   }
 
   render() {
+    const value = {
+      notes: this.state.notes,
+      folders: this.state.folders,
+      deleteNote: this.handleDeleteNote
+    };
     return (
+      <ApiContext.Provider value={value}>
       <div className="App">
         <nav className="App__nav">{this.renderNavRoutes()}</nav>
         <header className="App__header">
@@ -97,6 +103,7 @@ class App extends Component {
         </header>
         <main className="App__main">{this.renderMainRoutes()}</main>
       </div>
+      </ApiContext.Provider>
     );
   }
 }
