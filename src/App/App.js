@@ -7,6 +7,7 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import "./App.css";
+import AddFolder from '../AddFolder/AddFolder';
 
 class App extends Component {
   state = {
@@ -23,8 +24,8 @@ class App extends Component {
        if(!notesRes.ok)
         return notesRes.json().then(e=>Promise.reject(e));
       if(!foldersRes.ok)
-        return foldersRes.son().then(e=>Promise.reject(e));
-        return Promise.all([notesRes.json(), foldersRes.sjon()]);
+        return foldersRes.json().then(e=>Promise.reject(e));
+        return Promise.all([notesRes.json(), foldersRes.json()]);
       })
       .then(([notes, folders]) => {
         this.setState({notes, folders});
@@ -52,7 +53,7 @@ class App extends Component {
             />
         ))}
         <Route path ="/note/:noteId" component={NotePageNav} />
-        <Route path ="/add-folder" component={NotePageNav} />
+        <Route path ="/add-folder" component={AddFolder} />
         <Route path ="/add-note" component={NotePageNav} />
       </>
     );
@@ -71,7 +72,7 @@ class App extends Component {
         ))}
         <Route
           path="/note/:noteId"
-          component={NotePageMain} />;
+          component={NotePageMain} />
       </>
     );
   }
@@ -94,7 +95,7 @@ class App extends Component {
         <main className="App__main">{this.renderMainRoutes()}</main>
       </div>
       </ApiContext.Provider>
-    );
+    )
   }
 }
 
