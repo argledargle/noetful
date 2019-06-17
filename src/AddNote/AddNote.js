@@ -3,8 +3,11 @@ import config from "../config";
 import CircleButton from "../CircleButton/CircleButton";
 import { Link } from "react-router-dom";
 import "./AddNote.css"
+import moment from "moment";
+import ApiContext from '../ApiContext'
 
 class AddNote extends React.Component {
+  static contextType = ApiContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -12,11 +15,11 @@ class AddNote extends React.Component {
       id: "",
       modified: "",
       folderId: "",
-      content: "",
+      content: ""
     };
   }
 
-  folderChanged(name) {
+  nameChanged(name) {
     this.setState({
       name
     });
@@ -28,21 +31,23 @@ class AddNote extends React.Component {
     });
   }
 
+  handleFolderSelect(e) {
+    console.log(e)
+  };
+
   handleSubmit(e) {
     e.preventDefault();
-    const modified = (({ modified }) => ({ modified }))(this.state)
-    const name = (({ name }) => ({ name }))(this.state);
-    const content = (({content}) => ({content}))(this.state);
-    console.log(name, content)
+    const modified = moment();
+    const name = this.state.name;
+    const content = this.state.content;
     const url = `${config.API_ENDPOINT}/notes`;
     const options = {
       method: "POST",
-      body: JSON.stringify(name, content),
+      body: JSON.stringify({ name, content, modified }),
       headers: {
         "Content-Type": "application/json"
       }
     };
-    console.log(JSON.stringify(name, content))
 
     fetch(url, options)
       .then(res => {
@@ -57,9 +62,8 @@ class AddNote extends React.Component {
           id: "",
           modified: "",
           folderId: "",
-          content:""
+          content: ""
         });
-        console.log(this.context);
       })
       .catch(err => {
         this.setState({
@@ -67,7 +71,16 @@ class AddNote extends React.Component {
         });
       });
   }
+
   render() {
+    // creating folder options here
+    console.log(this.context.folders);
+    const options = this.context.folders.map((name, id) => (
+      <option value={name.name} key={id}>
+        {name.name}
+      </option>
+    ));
+    // creating folder options above here
     const error = this.state.error ? (
       <div className="error">{this.state.error}</div>
     ) : (
@@ -78,14 +91,25 @@ class AddNote extends React.Component {
         <h2>Add Folder</h2>
         {error}
         <form className="addnote__form" onSubmit={e => this.handleSubmit(e)}>
-          <label htmlFor="notename">Note Name:</label>
+          <label htmlFor="note_name">Note Name:</label>
           <input
             type="text"
             name="note-name"
             placeholder="Note"
             value={this.state.name}
-            onChange={e => this.folderChanged(e.target.value)}
+            onChange={e => this.nameChanged(e.target.value)}
           />
+          <br />
+          <label htmlFor="folder_name">Which folder?</label>
+          <select
+           id="folders"
+            name="folders"
+            onChange={e => this.handleFolderSelect(e.target.value)}
+          >
+            <option value="None">Select one...</option>
+            {options}
+          </select>
+
           <br />
           <label htmlFor="notecontent">Note Content:</label>
           <textarea
