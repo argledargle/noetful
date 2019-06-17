@@ -31,19 +31,22 @@ class AddNote extends React.Component {
     });
   }
 
-  handleFolderSelect(e) {
-    console.log(e)
+  handleFolderSelect(folderId) {
+    this.setState({
+      folderId
+    });
   };
 
   handleSubmit(e) {
     e.preventDefault();
     const modified = moment();
     const name = this.state.name;
+    const folderId = this.state.folderId;
     const content = this.state.content;
     const url = `${config.API_ENDPOINT}/notes`;
     const options = {
       method: "POST",
-      body: JSON.stringify({ name, content, modified }),
+      body: JSON.stringify({ name, content, modified, folderId }),
       headers: {
         "Content-Type": "application/json"
       }
@@ -76,7 +79,7 @@ class AddNote extends React.Component {
     // creating folder options here
     console.log(this.context.folders);
     const options = this.context.folders.map((name, id) => (
-      <option value={name.name} key={id}>
+      <option value={name.id} key={id}>
         {name.name}
       </option>
     ));

@@ -2,13 +2,14 @@ import React from 'react'
 import config from '../config';
 import CircleButton from '../CircleButton/CircleButton'
 import { Link } from 'react-router-dom'
+//import PropTypes from 'prop-types';
 
 class AddFolder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name: "",
-            id: "" //use date.Now() to create this ID
+            id: ""
         };
     }
 
@@ -41,7 +42,7 @@ class AddFolder extends React.Component {
         }
         return res.json();
       })
-      .then(data => {
+      .then(() => {
         this.setState({
           name: "",
           date:""
@@ -88,5 +89,6 @@ class AddFolder extends React.Component {
         )
     }
 }
+
 
 export default AddFolder
