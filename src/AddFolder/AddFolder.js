@@ -24,7 +24,6 @@ class AddFolder extends React.Component {
 
 
     handleSubmit(e) {
-        e.preventDefault()
         const name = (({name}) => ({name}))(this.state);
         const url = `${config.API_ENDPOINT}/folders`;
         const options = {
@@ -53,6 +52,7 @@ class AddFolder extends React.Component {
           error: err.message
         });
       });
+      document.reload()
   }
     render() {
         const error = this.state.error
