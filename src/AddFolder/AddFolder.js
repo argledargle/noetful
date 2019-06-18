@@ -13,13 +13,10 @@ class AddFolder extends React.Component {
         };
     }
 
-    folderChanged(name, date) {
+    folderChanged(name) {
         this.setState({
             name
         });
-        this.setState({
-          date
-      });
     };
 
 
@@ -58,7 +55,6 @@ class AddFolder extends React.Component {
         const error = this.state.error
         ? <div className="error">{this.state.error}</div>
         : "";
-        var time = Date.now();
         return(
             <div className="addfolder">
             <h2>Add Folder</h2>
@@ -68,7 +64,6 @@ class AddFolder extends React.Component {
               <input
                 type="text"
                 name="folder-name"
-                id={time}
                 placeholder="Folder"
                 value={this.state.name}
                 onChange={e => this.folderChanged(e.target.value)}/>

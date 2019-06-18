@@ -1,3 +1,7 @@
 .note-content {
     height: 50px
 }
+
+button:hover {
+    cursor: pointer;
+}
