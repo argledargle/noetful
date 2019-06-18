@@ -4,10 +4,11 @@ import "./Note.css";
 import moment from "moment";
 import ApiContext from '../ApiContext'
 import config from "../config";
+import PropTypes from 'prop-types';
 
 export default class Note extends React.Component {
   static defaultProps = {
-    onDeelteNote: () => {}
+    onDeleteNote: () => {}
   };
   static contextType = ApiContext;
 
@@ -33,6 +34,7 @@ export default class Note extends React.Component {
       .catch(error => console.error({ error }));
   };
   render() {
+    console.log(this.props)
     const { name, id, modified } = this.props;
     return (
       <div className="Note">
@@ -56,4 +58,43 @@ export default class Note extends React.Component {
       </div>
     );
   }
+}
+  // propsType validation goes below here
+Note.propTypes = {
+  id: (props, propName, componentName) => {
+    // get the value of the prop
+    const prop = props[propName];
+    // do the isRequired check
+    if(!prop) {
+      return new Error(`${propName} is required in ${componentName}. Validation Failed`);
+    }
+    // check the type
+    if (typeof prop != 'string') {
+      return new Error(`Invalid prop, ${propName} is expected to be a string in ${componentName}. ${typeof prop} found.`);
+    }
+  },
+  modified: (props, propName, componentName) => {
+    // get the value of the prop
+    const prop = props[propName];
+    // do the isRequired check
+    if(!prop) {
+      return new Error(`${propName} is required in ${componentName}. Validation Failed`);
+    }
+    // check the type
+    if (typeof prop != 'string') {
+      return new Error(`Invalid prop, ${propName} is expected to be a string in ${componentName}. ${typeof prop} found.`);
+    }
+  },
+  name: (props, propName, componentName) => {
+    // get the value of the prop
+    const prop = props[propName];
+    // do the isRequired check
+    if(!prop) {
+      return new Error(`${propName} is required in ${componentName}. Validation Failed`);
+    }
+    // check the type
+    if (typeof prop != 'string') {
+      return new Error(`Invalid prop, ${propName} is expected to be a string in ${componentName}. ${typeof prop} found.`);
+    }
+  },
 }

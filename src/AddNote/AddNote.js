@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import "./AddNote.css"
 import moment from "moment";
 import ApiContext from '../ApiContext'
-import propTypes from 'prop-types'
 
 class AddNote extends React.Component {
   static contextType = ApiContext;
@@ -40,7 +39,6 @@ class AddNote extends React.Component {
   };
 
   handleSubmit(e) {
-    e.preventDefault();
     const modified = moment();
     const name = this.state.name;
     const folderId = this.state.folderId;
@@ -96,7 +94,9 @@ class AddNote extends React.Component {
         {error}
         <form className="addnote__form" onSubmit={e => this.handleSubmit(e)}>
           <label htmlFor="note_name">Note Name:</label>
+          <br />
           <input
+          required
             type="text"
             name="note-name"
             placeholder="Note"
@@ -105,6 +105,7 @@ class AddNote extends React.Component {
           />
           <br />
           <label htmlFor="folder_name">Which folder?</label>
+          <br />
           <select
            id="folders"
             name="folders"
@@ -116,7 +117,9 @@ class AddNote extends React.Component {
 
           <br />
           <label htmlFor="notecontent">Note Content:</label>
+          <br />
           <textarea
+          required
             type="text"
             name="note-content"
             placeholder="Note content"
@@ -143,35 +146,5 @@ class AddNote extends React.Component {
     );
   }
 }
-
-
-AddNote.propTypes = {
-  folderId: propTypes.string.isRequired,
-  content: (props, propName, componentName) => {
-    // first get the value of the prop
-    const prop = props[propName];
-    // since we want to make this required let us check that first
-    if(!prop) {
-      return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-    }
-    // the prop has a value let's check the type
-    if (typeof prop != 'string') {
-      return new Error(`Invalid prop, ${propName} is expected to be a string in ${componentName}. ${typeof prop} found.`);
-    }
-  },
-  name: (props, propName, componentName) => {
-    // first get the value of the prop
-    const prop = props[propName];
-    // since we want to make this required let us check that first
-    if(!prop) {
-      return new Error(`${propName} is required in ${componentName}. Validation Failed`);
-    }
-    // the prop has a value let's check the type
-    if (typeof prop != 'string') {
-      return new Error(`Invalid prop, ${propName} is expected to be a string in ${componentName}. ${typeof prop} found.`);
-    }
-  }
-};
-
 
 export default AddNote;

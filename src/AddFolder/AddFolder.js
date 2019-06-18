@@ -2,6 +2,7 @@ import React from 'react'
 import config from '../config';
 import CircleButton from '../CircleButton/CircleButton'
 import { Link } from 'react-router-dom'
+import './AddFolder.css'
 //import PropTypes from 'prop-types';
 
 class AddFolder extends React.Component {
@@ -18,7 +19,6 @@ class AddFolder extends React.Component {
             name
         });
     };
-
 
     handleSubmit(e) {
         const name = (({name}) => ({name}))(this.state);
@@ -61,7 +61,9 @@ class AddFolder extends React.Component {
             { error }
             <form className="addfolder__form" onSubmit={e => this.handleSubmit(e)}>
               <label htmlFor="foldername">Folder Name:</label>
+              <br />
               <input
+              required
                 type="text"
                 name="folder-name"
                 placeholder="Folder"

@@ -13,6 +13,17 @@ export default class NoteListNav extends React.Component {
   return (
     <div className='NoteListNav'>
       <ul className='NoteListNav__list'>
+      <div className='NoteListNav__button-wrapper'>
+        <CircleButton
+          tag={Link}
+          to='/add-folder'
+          type='button'
+          className='NoteListNav__add-folder-button'
+        >
+          <br />
+          Add Folder
+        </CircleButton>
+      </div>
         {folders.map(folder =>
           <li key={folder.id}>
             <NavLink
@@ -27,17 +38,6 @@ export default class NoteListNav extends React.Component {
           </li>
         )}
       </ul>
-      <div className='NoteListNav__button-wrapper'>
-        <CircleButton
-          tag={Link}
-          to='/add-folder'
-          type='button'
-          className='NoteListNav__add-folder-button'
-        >
-          <br />
-          Add Folder
-        </CircleButton>
-      </div>
     </div>
   )
 }
